@@ -5,7 +5,11 @@ import com.acb.empmgnt.entity.dto.EmployeeDTO;
 import com.acb.empmgnt.service.EmployeeService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
 import java.util.List;
 
@@ -59,5 +63,24 @@ public class EmployeeControllerV1 {
         e.setReportsTo(dto.getReportsTo());
 
         return e;
+    }
+
+    // ✅ Excel Download API
+    @GetMapping("/report")
+    public ResponseEntity<byte[]> downloadEmployeeReport() {
+
+        byte[] excelData = service.generateEmployeeExcelReport();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(
+                MediaType.parseMediaType(
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"));
+        headers.setContentDispositionFormData(
+                "attachment", "employee-report.xlsx");
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .body(excelData);
     }
 }

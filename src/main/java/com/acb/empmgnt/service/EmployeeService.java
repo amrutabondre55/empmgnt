@@ -15,4 +15,6 @@ public interface EmployeeService {
     EmployeeEntity update(Integer id, EmployeeEntity employee);
 
     void delete(Integer id);
+
+    byte[] generateEmployeeExcelReport();
 }
