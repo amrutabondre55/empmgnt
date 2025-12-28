@@ -22,7 +22,7 @@ public class EmployeeControllerV1 {
 
     @PostMapping
     public EmployeeEntity create(@Valid @RequestBody EmployeeDTO dto) {
-        return service.create(map(dto));
+        return service.create(convertDtoToEntityMap(dto));
     }
 
     @GetMapping
@@ -37,7 +37,7 @@ public class EmployeeControllerV1 {
 
     @PutMapping("/{id}")
     public EmployeeEntity update(@PathVariable Integer id, @RequestBody EmployeeDTO dto) {
-        return service.update(id, map(dto));
+        return service.update(id, convertDtoToEntityMap(dto));
     }
 
     @DeleteMapping("/{id}")
@@ -46,13 +46,18 @@ public class EmployeeControllerV1 {
         return "Deleted successfully";
     }
 
-    private EmployeeEntity map(EmployeeDTO dto) {
+    private EmployeeEntity convertDtoToEntityMap(EmployeeDTO dto) {
         EmployeeEntity e = new EmployeeEntity();
+
         e.setEmployeeNumber(dto.getEmployeeNumber());
         e.setFirstName(dto.getFirstName());
         e.setLastName(dto.getLastName());
         e.setEmail(dto.getEmail());
         e.setJobTitle(dto.getJobTitle());
+        e.setExtension(dto.getExtension());
+        e.setOfficeCode(dto.getOfficeCode());
+        e.setReportsTo(dto.getReportsTo());
+
         return e;
     }
 }

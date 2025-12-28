@@ -14,16 +14,12 @@ public class EmployeeDTO {
 
     @NotNull
     private Integer employeeNumber;
-
     @NotBlank
     private String firstName;
-
     @NotBlank
     private String lastName;
-
     @Email
     private String email;
-
     private String extension;
     private String officeCode;
     private Integer reportsTo;
